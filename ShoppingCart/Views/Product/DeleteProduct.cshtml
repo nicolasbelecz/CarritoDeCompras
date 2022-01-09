@@ -1,0 +1,47 @@
+﻿@model ShoppingCart.Models.ViewModels.DeleteProductViewModel
+@{
+    ViewBag.Title = "Eliminar Producto";
+}
+
+<h2>Elimnar Proucto</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("DeleteProduct", "Product", FormMethod.Post, new { role = "form" }))
+        {
+            <h3>Esta seguro que desea eliminar el producto selecionado?</h3>
+
+            @Html.HiddenFor(d => d.id);
+
+            @Html.AntiForgeryToken();
+
+            @Html.ValidationMessage("error", new { @class = "text-danger" });
+
+            @Html.LabelFor(d => d.nombre);
+            @Html.TextBoxFor(d => d.nombre, new { @class = "form-control", @disabled = "disabled" });
+            @Html.ValidationMessage("Nombre", new { @class = "text-danger" });
+
+            <br />
+
+            @Html.LabelFor(d => d.descripcion);
+            @Html.TextBoxFor(d => d.descripcion, new { @class = "form-control", @disabled = "disabled" });
+            @Html.ValidationMessage("Descripcion", new { @class = "text-danger" });
+
+            <br />
+
+            @Html.LabelFor(d => d.precio);
+            @Html.TextBoxFor(d => d.precio, new { @class = "form-control", @disabled = "disabled" });
+            @Html.ValidationMessage("Precio", new { @class = "text-danger" });
+
+            <br />    
+            
+                
+          <div style="text-align:right">
+          <input type="submit" style="text-align:right" class="btn-danger" value="Eliminar Producto" id="btn eliminar" />
+          </div>
+                     
+            
+        }
+    </div>
+</div>
+

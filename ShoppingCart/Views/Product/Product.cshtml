@@ -1,0 +1,47 @@
+﻿@model List<ShoppingCart.Models.TableViewModel.ProductTableViewModel>
+@{
+    ViewBag.Title = "Productos";
+}
+
+<h2>Productos</h2>
+
+
+<div class="row">
+    <div col="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+            </tr>
+
+            @foreach (var oProduct in Model)
+            {
+                <tr>
+                    
+                    
+                    <td>@oProduct.nombre</td>
+                    <td>@oProduct.descripcion</td>
+                    <td>@oProduct.precio</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Product/DeleteProduct/"+oProduct.id)'" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="document.location.href='@Url.Content("~/Product/EditProduct/"+oProduct.id)'" type="button" value="Editar" class="btn btn-default" />
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="button" class="btn-primary" onclick="document.location.href='@Url.Content("~/Product/AddProduct")'" value="Nuevo Producto"/>
+    </div>
+</div>
+
+
+
+

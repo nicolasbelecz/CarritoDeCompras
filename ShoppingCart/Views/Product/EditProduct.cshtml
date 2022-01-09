@@ -1,0 +1,42 @@
+﻿@model ShoppingCart.Models.ViewModels.EditProductViewModel
+@{
+    ViewBag.Title = "EditProduct";
+}
+
+<h2>Editar Proucto</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { role = "form" }))
+        {
+
+            @Html.HiddenFor(d => d.id);
+
+            @Html.AntiForgeryToken();
+
+            @Html.ValidationMessage("error", new { @class = "text-danger" });
+
+            @Html.LabelFor(d => d.nombre);
+            @Html.TextBoxFor(d => d.nombre, new { @class = "form-control" });
+            @Html.ValidationMessage("Nombre", new { @class = "text-danger" });
+
+            <br />
+
+            @Html.LabelFor(d => d.descripcion);
+            @Html.TextBoxFor(d => d.descripcion, new { @class = "form-control" });
+            @Html.ValidationMessage("Descripcion", new { @class = "text-danger" });
+
+            <br />
+
+            @Html.LabelFor(d => d.precio);
+            @Html.TextBoxFor(d => d.precio, new { @class = "form-control" });
+            @Html.ValidationMessage("Precio", new { @class = "text-danger" });
+
+            <br />
+
+            <div style="text-align:right">
+                <input type="submit" class="btn-success" value="Editar Producto" />
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model ShoppingCart.Models.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Agregar Producto";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-12">
+
+        @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken();
+
+            @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+            @Html.LabelFor(d => d.nombre)
+            @Html.TextBoxFor(d => d.nombre, new { @class = "form-control" });
+            @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+
+            <br />
+
+            @Html.LabelFor(d => d.descripcion)
+            @Html.TextBoxFor(d => d.descripcion, new { @class = "form-control" })
+            @Html.ValidationMessage("Descripcion", new { @class = "text-danger" })
+
+            <br />
+
+            @Html.LabelFor(d => d.precio)
+            @Html.TextBoxFor(d => d.precio, new { @class = "form-control" })
+            @Html.ValidationMessage("Precio", new { @class = "text-danger" })
+
+            
+
+            <div style="text-align:right;">
+                <input type="submit" class="btn-success" value="Guardar Producto" />
+            </div>
+        }
+
+    </div>
+</div>
+

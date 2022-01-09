@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingCartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DetallePedido">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idPedido" Type="int" />
+    <Property Name="idProducto" Type="int" />
+    <Property Name="cantidad" Type="int" />
+    <Property Name="totalRenglon" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="Pedido">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="subtotal" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="total" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="precio" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <Association Name="FK_DetallePedido_Pedido">
+    <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
+    <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedido">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DetallePedido">
+        <PropertyRef Name="idPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetallePedido_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DetallePedido">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShoppingCartModelStoreContainer">
+    <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DetallePedido_Pedido" Association="Self.FK_DetallePedido_Pedido">
+      <End Role="Pedido" EntitySet="Pedido" />
+      <End Role="DetallePedido" EntitySet="DetallePedido" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetallePedido_Producto" Association="Self.FK_DetallePedido_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="DetallePedido" EntitySet="DetallePedido" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

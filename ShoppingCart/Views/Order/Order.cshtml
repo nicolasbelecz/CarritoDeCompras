@@ -1,0 +1,118 @@
+﻿@model ShoppingCart.Models.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<h2>Pedidos</h2>
+
+@{ decimal accu = 0;} 
+
+@using (Html.BeginForm("Order", "Order", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken();
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="form-group">
+                <h4>Producto</h4>
+                @Html.DropDownListFor(model => model.idProdSelec, new SelectList(ViewBag.PRODUCTLIST, "Value", "Text"), new { @class = "form-cotrol" })
+                <h4>Cantidad</h4>
+                @Html.TextBoxFor(model => model.cantSelec, new { @class = "form-control" })
+                @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+
+                <div style="text-align:right;">
+                    <input type="submit" class="btn-success" value="Agregar Producto" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <table class="table table-bordered">
+                <tr>
+
+
+                    <th>Nombre Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Precio Renglon</th>
+                </tr>
+
+                @for (int i = 0; i < Model.detalles.Count; i++)
+
+                 
+
+                {
+                    <tr>
+
+
+
+                        <td>
+                            @Html.HiddenFor(model => Model.detalles[i].nombreProd)
+                            @Html.DisplayFor(model => Model.detalles[i].nombreProd, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.HiddenFor(model => Model.detalles[i].cantidad)
+                            @Html.DisplayFor(model => Model.detalles[i].cantidad, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.HiddenFor(model => Model.detalles[i].precio)
+                            @Html.DisplayFor(model => Model.detalles[i].precio, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.HiddenFor(model => Model.detalles[i].precioRenglon)
+                            @Html.DisplayFor(model => Model.detalles[i].precioRenglon, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            <a onclick="document.location.href='@Url.Content("~/Order/DeteleItem")'">Quitar</a>
+                        </td>
+
+                    </tr>
+
+                    accu = accu + Model.detalles[i].precioRenglon;
+
+                }
+
+            </table>
+            <div style="text-align:right">
+                <label>Total:</label>
+                <input type="text" value="@accu"  />
+            </div>
+            
+
+        </div>
+    </div>
+
+    <div style="text-align:right;">
+        <input type="button" onclick="SaveOrder()" class="btn-success" value="Enviar Pedido" />
+    </div>
+
+}
+
+
+<script>
+
+    function SaveOrder() {
+
+        var data = $('form').serialize();
+            $.ajax({
+                url: '@Url.Action("~/Order/Order")',
+                data: data,
+                type: 'POST',
+                success: function (data) {
+                    var selector = $("#conceptDiv");
+                    selector.empty();
+                    selector.html(data);
+                }
+            });
+
+    }
+
+    
+
+</script>
+
+
+
+

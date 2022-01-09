@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingCartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DetallePedido">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idPedido" Type="Int32" />
+    <Property Name="idProducto" Type="Int32" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="totalRenglon" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="Pedido" Relationship="Self.FK_DetallePedido_Pedido" FromRole="DetallePedido" ToRole="Pedido" />
+    <NavigationProperty Name="Producto" Relationship="Self.FK_DetallePedido_Producto" FromRole="DetallePedido" ToRole="Producto" />
+  </EntityType>
+  <EntityType Name="Pedido">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="subtotal" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="total" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="DetallePedido" Relationship="Self.FK_DetallePedido_Pedido" FromRole="Pedido" ToRole="DetallePedido" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="precio" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="DetallePedido" Relationship="Self.FK_DetallePedido_Producto" FromRole="Producto" ToRole="DetallePedido" />
+  </EntityType>
+  <Association Name="FK_DetallePedido_Pedido">
+    <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
+    <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedido">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DetallePedido">
+        <PropertyRef Name="idPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetallePedido_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DetallePedido">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShoppingCartEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" />
+    <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" />
+    <AssociationSet Name="FK_DetallePedido_Pedido" Association="Self.FK_DetallePedido_Pedido">
+      <End Role="Pedido" EntitySet="Pedido" />
+      <End Role="DetallePedido" EntitySet="DetallePedido" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetallePedido_Producto" Association="Self.FK_DetallePedido_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="DetallePedido" EntitySet="DetallePedido" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

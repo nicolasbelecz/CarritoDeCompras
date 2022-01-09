@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShoppingCartModelStoreContainer" CdmEntityContainer="ShoppingCartEntities1">
+    <EntitySetMapping Name="DetallePedido">
+      <EntityTypeMapping TypeName="ShoppingCartModel.DetallePedido">
+        <MappingFragment StoreEntitySet="DetallePedido">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="totalRenglon" ColumnName="totalRenglon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pedido">
+      <EntityTypeMapping TypeName="ShoppingCartModel.Pedido">
+        <MappingFragment StoreEntitySet="Pedido">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Producto">
+      <EntityTypeMapping TypeName="ShoppingCartModel.Producto">
+        <MappingFragment StoreEntitySet="Producto">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
