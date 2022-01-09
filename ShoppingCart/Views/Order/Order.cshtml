@@ -32,7 +32,7 @@
             <table class="table table-bordered">
                 <tr>
 
-
+                    <th>Id Producto</th>
                     <th>Nombre Producto</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
@@ -47,7 +47,10 @@
                     <tr>
 
 
-
+                        <td>
+                            @Html.HiddenFor(model => Model.detalles[i].idProducto)
+                            @Html.DisplayFor(model => Model.detalles[i].idProducto, new { @class = "form-control" })
+                        </td>
                         <td>
                             @Html.HiddenFor(model => Model.detalles[i].nombreProd)
                             @Html.DisplayFor(model => Model.detalles[i].nombreProd, new { @class = "form-control" })
@@ -65,7 +68,7 @@
                             @Html.DisplayFor(model => Model.detalles[i].precioRenglon, new { @class = "form-control" })
                         </td>
                         <td>
-                            <a onclick="document.location.href='@Url.Content("~/Order/DeteleItem")'">Quitar</a>
+                            <a onclick="document.location.href='@Url.Action("~/Order/DeteleItem")'">Quitar</a>
                         </td>
 
                     </tr>
@@ -97,13 +100,11 @@
 
         var data = $('form').serialize();
             $.ajax({
-                url: '@Url.Action("~/Order/Order")',
+                url: '@Url.Action("/SaveOrder")',
                 data: data,
                 type: 'POST',
                 success: function (data) {
-                    var selector = $("#conceptDiv");
-                    selector.empty();
-                    selector.html(data);
+                    
                 }
             });
 

@@ -84,19 +84,24 @@ namespace ShoppingCart.Controllers
                 Pedido oPedido = new Pedido();
 
                 db.Pedido.Add(oPedido);
-
                 db.SaveChanges();
+
+               
 
                 foreach (var oDetalle in model.detalles)
                 {
-                    detalles det = new detalles();
+                    DetallePedido det = new DetallePedido();
                     det.cantidad = oDetalle.cantidad;
                     det.idProducto = oDetalle.idProducto;
-                    det.precio = oDetalle.precio;
-                    det.precioRenglon = oDetalle.cantidad * oDetalle.precio;
+                    det.totalRenglon = oDetalle.cantidad * oDetalle.precio;
                     det.idPedido = oPedido.id;
+
+                    
+                    db.DetallePedido.Add(det);
+
                 }
 
+                
                 db.SaveChanges();
             }
 
@@ -132,6 +137,11 @@ namespace ShoppingCart.Controllers
 
 
             return View(model);
+        }
+
+        public ActionResult DeleteItem(OrderViewModel model)
+        {
+            var itemToDelete = model.detalles.FirstOrDefault(w=> w.idProducto =)
         }
 
 
