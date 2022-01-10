@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="03ca98d729cb4074876ce5979e1a95cb" Name="Diagram1">
-        <EntityTypeShape EntityType="ShoppingCartModel.DetallePedido" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShoppingCartModel.Pedido" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShoppingCartModel.Producto" Width="1.5" PointX="0.875" PointY="4.75" IsExpanded="true" />
-        <AssociationConnector Association="ShoppingCartModel.FK_DetallePedido_Pedido" ManuallyRouted="false" />
-        <AssociationConnector Association="ShoppingCartModel.FK_DetallePedido_Producto" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ShoppingCartModel.DetallePedido" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="ShoppingCartModel.Pedido" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="ShoppingCartModel.Producto" Width="1.5" PointX="0.75" PointY="5.125" />
+        <AssociationConnector Association="ShoppingCartModel.FK_DetallePedido_Pedido" />
+        <AssociationConnector Association="ShoppingCartModel.FK_DetallePedido_Producto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

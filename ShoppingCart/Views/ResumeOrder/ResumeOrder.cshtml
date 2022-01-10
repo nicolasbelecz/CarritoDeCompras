@@ -1,0 +1,35 @@
+﻿@model List<ShoppingCart.Models.TableViewModel.OrderTableViewModel>
+@{
+    ViewBag.Title = "ResumeOrder";
+}
+
+<h2>Resumen Pedido</h2>
+
+<div class="row">
+    <div col="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                
+            </tr>
+
+            @foreach (var oResumeOrder in Model)
+            {
+                <tr>
+
+
+                    <td>@oResumeOrder.id</td>
+                    <td>@oResumeOrder.fecha</td>
+                    <td>@oResumeOrder.total</td>
+                    
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
+

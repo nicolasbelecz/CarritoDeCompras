@@ -36,5 +36,7 @@ namespace ShoppingCart.Models.ViewModels
         public decimal precioRenglon { get; set; }
 
         public int idPedido { get; set; }
+
+        public bool ActiveFill { get; set; }
     }
 }

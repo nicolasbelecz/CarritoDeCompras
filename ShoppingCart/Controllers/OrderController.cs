@@ -79,14 +79,18 @@ namespace ShoppingCart.Controllers
         [HttpPost]
         public ActionResult SaveOrder(OrderViewModel model)
         {
+            decimal totalOrder = 0;
+
             using (ShoppingCartEntities1 db = new ShoppingCartEntities1())
             {
                 Pedido oPedido = new Pedido();
 
+                oPedido.fecha = DateTime.Now;
+
                 db.Pedido.Add(oPedido);
                 db.SaveChanges();
 
-               
+
 
                 foreach (var oDetalle in model.detalles)
                 {
@@ -96,54 +100,37 @@ namespace ShoppingCart.Controllers
                     det.totalRenglon = oDetalle.cantidad * oDetalle.precio;
                     det.idPedido = oPedido.id;
 
-                    
+                    totalOrder = totalOrder + (oDetalle.cantidad * oDetalle.precio);
+
                     db.DetallePedido.Add(det);
 
                 }
 
-                
+                oPedido.total = totalOrder;
+
                 db.SaveChanges();
             }
 
             ViewBag.Message = "Pedido Insertado";
-            return View();
+            return View(ViewBag);
 
         }
-
         [HttpPost]
-        public ActionResult DeleteItem(int id)
+        public ActionResult DeleteItem(OrderViewModel model)
         {
-            OrderViewModel model = new OrderViewModel();
+            var DeleteItem = model.detalles.FirstOrDefault(w => w.ActiveFill == true);
 
-            detalles det = new detalles();
-
-            det.idProducto = id;
-
-            model.detalles.Remove(det);
+            model.detalles.Remove(DeleteItem);
 
             List<SelectListItem> list = new List<SelectListItem>();
 
-            using (Models.ShoppingCartEntities1 db = new Models.ShoppingCartEntities1())
-            {
-                list = (from d in db.Producto
-                        select new SelectListItem
-                        {
-                            Value = d.id.ToString(),
-                            Text = d.nombre
-                        }).ToList();
-            }
+           
 
-            ViewBag.PRODUCTLIST = list;
-
-
-            return View(model);
+            return RedirectToAction("Order","Order",model);
         }
-
-        public ActionResult DeleteItem(OrderViewModel model)
-        {
-            var itemToDelete = model.detalles.FirstOrDefault(w=> w.idProducto =)
-        }
-
-
     }
 }
+
+        
+       
+    

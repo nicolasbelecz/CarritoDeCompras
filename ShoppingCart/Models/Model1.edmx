@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShoppingCartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ShoppingCartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DetallePedido">
           <Key>
             <PropertyRef Name="id" />
@@ -20,8 +20,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="subtotal" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="total" Type="nchar" MaxLength="10" />
+          <Property Name="total" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="fecha" Type="datetime" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -69,11 +69,23 @@
             <End Role="DetallePedido" EntitySet="DetallePedido" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShoppingCartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ShoppingCartEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DetallePedido" EntityType="ShoppingCartModel.DetallePedido" />
+          <EntitySet Name="Pedido" EntityType="ShoppingCartModel.Pedido" />
+          <EntitySet Name="Producto" EntityType="ShoppingCartModel.Producto" />
+          <AssociationSet Name="FK_DetallePedido_Pedido" Association="ShoppingCartModel.FK_DetallePedido_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallePedido_Producto" Association="ShoppingCartModel.FK_DetallePedido_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="DetallePedido">
           <Key>
             <PropertyRef Name="id" />
@@ -83,17 +95,17 @@
           <Property Name="idProducto" Type="Int32" />
           <Property Name="cantidad" Type="Int32" />
           <Property Name="totalRenglon" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="Pedido" Relationship="Self.FK_DetallePedido_Pedido" FromRole="DetallePedido" ToRole="Pedido" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_DetallePedido_Producto" FromRole="DetallePedido" ToRole="Producto" />
+          <NavigationProperty Name="Pedido" Relationship="ShoppingCartModel.FK_DetallePedido_Pedido" FromRole="DetallePedido" ToRole="Pedido" />
+          <NavigationProperty Name="Producto" Relationship="ShoppingCartModel.FK_DetallePedido_Producto" FromRole="DetallePedido" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Pedido">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="subtotal" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="total" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="DetallePedido" Relationship="Self.FK_DetallePedido_Pedido" FromRole="Pedido" ToRole="DetallePedido" />
+          <Property Name="total" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DetallePedido" Relationship="ShoppingCartModel.FK_DetallePedido_Pedido" FromRole="Pedido" ToRole="DetallePedido" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -103,11 +115,11 @@
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="precio" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="DetallePedido" Relationship="Self.FK_DetallePedido_Producto" FromRole="Producto" ToRole="DetallePedido" />
+          <NavigationProperty Name="DetallePedido" Relationship="ShoppingCartModel.FK_DetallePedido_Producto" FromRole="Producto" ToRole="DetallePedido" />
         </EntityType>
         <Association Name="FK_DetallePedido_Pedido">
-          <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
-          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <End Type="ShoppingCartModel.Pedido" Role="Pedido" Multiplicity="0..1" />
+          <End Type="ShoppingCartModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pedido">
               <PropertyRef Name="id" />
@@ -118,8 +130,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetallePedido_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <End Type="ShoppingCartModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="ShoppingCartModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Producto">
               <PropertyRef Name="id" />
@@ -129,20 +141,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ShoppingCartEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" />
-          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
-          <EntitySet Name="Producto" EntityType="Self.Producto" />
-          <AssociationSet Name="FK_DetallePedido_Pedido" Association="Self.FK_DetallePedido_Pedido">
-            <End Role="Pedido" EntitySet="Pedido" />
-            <End Role="DetallePedido" EntitySet="DetallePedido" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetallePedido_Producto" Association="Self.FK_DetallePedido_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="DetallePedido" EntitySet="DetallePedido" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -151,30 +150,30 @@
           <EntitySetMapping Name="DetallePedido">
             <EntityTypeMapping TypeName="ShoppingCartModel.DetallePedido">
               <MappingFragment StoreEntitySet="DetallePedido">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
-                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
                 <ScalarProperty Name="totalRenglon" ColumnName="totalRenglon" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pedido">
             <EntityTypeMapping TypeName="ShoppingCartModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="ShoppingCartModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

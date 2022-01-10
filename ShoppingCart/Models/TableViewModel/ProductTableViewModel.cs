@@ -13,10 +13,5 @@ namespace ShoppingCart.Models.TableViewModel
         public decimal? precio { get; set; }
     }
 
-    public class OrderTableViewModel
-    {
-        public int id { get; set; }
-        public string nombre { get; set; }
-        public decimal? precio { get; set; }
-    }
+   
 }

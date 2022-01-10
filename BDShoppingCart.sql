@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [ShoppingCart]    Script Date: 09/01/2022 13:24:14 ******/
+/****** Object:  Database [ShoppingCart]    Script Date: 09/01/2022 22:46:51 ******/
 CREATE DATABASE [ShoppingCart]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,7 @@ ALTER DATABASE [ShoppingCart] SET QUERY_STORE = OFF
 GO
 USE [ShoppingCart]
 GO
-/****** Object:  Table [dbo].[DetallePedido]    Script Date: 09/01/2022 13:24:14 ******/
+/****** Object:  Table [dbo].[DetallePedido]    Script Date: 09/01/2022 22:46:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -97,22 +97,22 @@ CREATE TABLE [dbo].[DetallePedido](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Pedido]    Script Date: 09/01/2022 13:24:14 ******/
+/****** Object:  Table [dbo].[Pedido]    Script Date: 09/01/2022 22:46:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Pedido](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[subtotal] [decimal](10, 2) NULL,
-	[total] [nchar](10) NULL,
+	[total] [decimal](10, 2) NULL,
+	[fecha] [datetime] NULL,
  CONSTRAINT [PK_Pedido] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Producto]    Script Date: 09/01/2022 13:24:14 ******/
+/****** Object:  Table [dbo].[Producto]    Script Date: 09/01/2022 22:46:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -128,15 +128,39 @@ CREATE TABLE [dbo].[Producto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+SET IDENTITY_INSERT [dbo].[DetallePedido] ON 
+GO
+INSERT [dbo].[DetallePedido] ([id], [idPedido], [idProducto], [cantidad], [totalRenglon]) VALUES (15, 11, 32, 1, CAST(80000.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[DetallePedido] ([id], [idPedido], [idProducto], [cantidad], [totalRenglon]) VALUES (16, 11, 33, 2, CAST(30000.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[DetallePedido] ([id], [idPedido], [idProducto], [cantidad], [totalRenglon]) VALUES (17, 12, 33, 1, CAST(15000.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[DetallePedido] ([id], [idPedido], [idProducto], [cantidad], [totalRenglon]) VALUES (18, 13, 33, 1, CAST(15000.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[DetallePedido] ([id], [idPedido], [idProducto], [cantidad], [totalRenglon]) VALUES (19, 13, 34, 2, CAST(51001.48 AS Decimal(10, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[DetallePedido] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Pedido] ON 
+GO
+INSERT [dbo].[Pedido] ([id], [total], [fecha]) VALUES (11, CAST(110000.00 AS Decimal(10, 2)), CAST(N'2022-01-09T21:46:07.463' AS DateTime))
+GO
+INSERT [dbo].[Pedido] ([id], [total], [fecha]) VALUES (12, CAST(15000.00 AS Decimal(10, 2)), CAST(N'2022-01-09T21:48:55.893' AS DateTime))
+GO
+INSERT [dbo].[Pedido] ([id], [total], [fecha]) VALUES (13, CAST(66001.48 AS Decimal(10, 2)), CAST(N'2022-01-09T21:49:05.330' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Pedido] OFF
+GO
 SET IDENTITY_INSERT [dbo].[Producto] ON 
 GO
-INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (28, N'PS5', N'Consola de VideoJuego', CAST(10000.00 AS Decimal(10, 2)))
+INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (32, N'PlayStation 5', N'Consola de VideoJuegos', CAST(80000.00 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (29, N'TV LED', N'Samsung 40"', CAST(5223.25 AS Decimal(10, 2)))
+INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (33, N'Bicicleta', N'Tomaseli', CAST(15000.00 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (30, N'Bicicleta', N'Tomaseli', CAST(4000.00 AS Decimal(10, 2)))
+INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (34, N'Lavarropas', N'Drean NEXT 8.12', CAST(25500.74 AS Decimal(10, 2)))
 GO
-INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (31, N'Otra Cosa', N'Producto Nuevo', CAST(54.00 AS Decimal(10, 2)))
+INSERT [dbo].[Producto] ([id], [nombre], [descripcion], [precio]) VALUES (35, N'Heladera', N'Samsung Blanca', CAST(23458.00 AS Decimal(10, 2)))
 GO
 SET IDENTITY_INSERT [dbo].[Producto] OFF
 GO

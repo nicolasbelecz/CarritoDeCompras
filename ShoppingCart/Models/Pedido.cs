@@ -21,8 +21,8 @@ namespace ShoppingCart.Models
         }
     
         public int id { get; set; }
-        public Nullable<decimal> subtotal { get; set; }
-        public string total { get; set; }
+        public Nullable<decimal> total { get; set; }
+        public Nullable<System.DateTime> fecha { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetallePedido> DetallePedido { get; set; }
